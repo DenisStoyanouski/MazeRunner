@@ -21,14 +21,18 @@ public class Play {
                 }
             }
         }
+        enterEntrance();
+        enterExit();
 
-        for (int k = 3; k < 9; k +=2 ) {
-            int row = getNumberOfLine();
-            while (" ".equals(maze[row - 2][k - 2])) {
-                maze[row][k] = " ".repeat(2);
+        for (int k = 2; k < 9; k +=2 ) {
+            int amount = getAmountOfCell();
+            int line = getNumberOfLine();
+            while (!"  ".equals(maze[line][k])) {
+                if (!"  ".equals(maze[line - 1][k - 2]) && !"  ".equals(maze[line + 1][k - 2])) {
+                    maze[line][k] = " ".repeat(2);
+                }
             }
         }
-
     }
 
     private void enterEntrance() {
@@ -36,10 +40,10 @@ public class Play {
     }
 
     private void enterExit() {
-        maze[getNumberOfLine()][9] = "  ";
+        int line = getNumberOfLine();
+        maze[line][9] = "  ";
+        maze[line][8] = "  ";
     }
-
-
     
     private void displayMaze() {
         for (String[] line : maze) {
