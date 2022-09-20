@@ -1,14 +1,30 @@
 package maze;
 
 import java.util.Random;
+import java.util.Scanner;
 
 public class Play {
-
-    final String [][] maze = new String[10][10];
+    int lines;
+    int columns;
+    String [][] maze = new String[lines][columns];
+    final
     public void go() {
+        getGridSize();
         fillMaze();
         displayMaze();
     }
+
+    private String getInput() {
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextLine();
+    }
+
+    private void getGridSize() {
+        String[] gridSize = getInput().trim().split("\\s+");
+        lines = Integer.parseInt(gridSize[0]);
+        columns = Integer.parseInt(gridSize[0]);
+    }
+
 
     private void fillMaze() {
         //fill blocks and empty cells
