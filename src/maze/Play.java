@@ -1,8 +1,6 @@
 package maze;
 
-import java.util.Arrays;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Play {
     int lines;
@@ -13,8 +11,10 @@ public class Play {
     final
     public void go() {
         getGridSize();
-        fillGraphMatrix();
-        displayGraphMatrix();
+        fillEdgesMatrix();
+
+        /*fillGraphMatrix();
+        displayGraphMatrix();*/
         /*fillMaze();
         displayMaze();*/
     }
@@ -35,15 +35,33 @@ public class Play {
             getGridSize();
         }
         maze = new String[lines][columns];
-        graphMatrix = new int[lines][columns];
+        graphMatrix = new int[lines - 1][columns - 1];
     }
 
-    private void fillGraphMatrix() {
+    /*private void fillGraphMatrix() {
         for (int i = 0; i < graphMatrix.length; i++) {
             for (int j = 0; j < graphMatrix[0].length; j++) {
-                graphMatrix[i][j] = getWeight();
             }
         }
+    }*/
+
+    private void fillEdgesMatrix() {
+        ArrayList<ArrayList<List<Integer>>> edges = new ArrayList<>();
+        for (int i = 0; i < graphMatrix.length; i++) {
+            for (int j = 0; j < graphMatrix[0].length; j++) {
+                ArrayList<List<Integer>> edgesOfGraph = new ArrayList<>();
+                edgesOfGraph.add(List.of(i + j + 1, getWeight()));
+                edgesOfGraph.add(List.of(i + j + 10, getWeight()));
+
+                edges.add(edgesOfGraph);
+            }
+        }
+        displayEdgesMatrix(edges);
+    }
+
+    private void displayEdgesMatrix(ArrayList edges) {
+        System.out.println(edges.toString());
+        System.out.println(edges.get(0));
     }
 
     private void displayGraphMatrix() {
