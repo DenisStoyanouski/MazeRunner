@@ -35,7 +35,7 @@ public class Play {
             getGridSize();
         }
         maze = new String[lines][columns];
-        graphMatrix = new int[lines - 1][columns - 1];
+        graphMatrix = new int[lines][columns];
     }
 
     /*private void fillGraphMatrix() {
@@ -50,9 +50,12 @@ public class Play {
         for (int i = 0; i < graphMatrix.length; i++) {
             for (int j = 0; j < graphMatrix[0].length; j++) {
                 ArrayList<List<Integer>> edgesOfGraph = new ArrayList<>();
-                edgesOfGraph.add(List.of(i + j + 1, getWeight()));
-                edgesOfGraph.add(List.of(i + j + 10, getWeight()));
-
+                if (j != graphMatrix[i].length - 1) {
+                    edgesOfGraph.add(List.of(j + i * columns + 1, getWeight()));
+                }
+                if (i != graphMatrix.length - 1) {
+                    edgesOfGraph.add(List.of(j + i * columns + columns, getWeight()));
+                }
                 edges.add(edgesOfGraph);
             }
         }
@@ -60,8 +63,9 @@ public class Play {
     }
 
     private void displayEdgesMatrix(ArrayList edges) {
-        System.out.println(edges.toString());
-        System.out.println(edges.get(0));
+        for (Object node : edges) {
+                System.out.println("Node " + edges.indexOf(node) + "--> " + node.toString());
+        }
     }
 
     private void displayGraphMatrix() {
