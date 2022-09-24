@@ -1,6 +1,5 @@
 package maze;
 
-import javax.swing.*;
 import java.util.*;
 
 public class Play {
@@ -10,12 +9,8 @@ public class Play {
 
     ArrayList<ArrayList<List<Integer>>> edges = new ArrayList<>();
 
-    final
     public void go() {
         getGridSize();
-        fillEdgesMatrix();
-        fillMaze();
-        displayMaze();
     }
 
     private String getInput() {
@@ -34,6 +29,7 @@ public class Play {
             getGridSize();
         }
         maze = new String[lines][columns];
+        fillEdgesMatrix();
     }
 
     private void fillEdgesMatrix() {
@@ -49,14 +45,6 @@ public class Play {
                 }
                 edges.add(edgesOfGraph);
             }
-        }
-        displayEdgesMatrix(edges);
-    }
-
-    private void displayEdgesMatrix(ArrayList<ArrayList<List<Integer>>> edges) {
-        System.out.println("This is EdgesMatrix");
-        for (var node : edges) {
-            System.out.println("Node " + edges.indexOf(node) + "--> " + node.toString());
         }
         createSpanningTree(edges);
     }
@@ -77,16 +65,8 @@ public class Play {
         for (var edge : edges) {
             edges.get(edge.get(0).get(0)).add(edge.get(0));
         }
-
-        displaySpanningTree(edges);
+        fillMaze();
     }
-
-    private void displaySpanningTree(ArrayList<ArrayList<List<Integer>>> edges) {
-        for (var node : edges) {
-            System.out.println("Node " + edges.indexOf(node) + "--> " + node.toString());
-        }
-    }
-
 
     private void fillMaze() {
         //fill blocks and empty cells
@@ -108,6 +88,7 @@ public class Play {
         }
         getEnter();
         getEntrance();
+        displayMaze();
 
     }
 
