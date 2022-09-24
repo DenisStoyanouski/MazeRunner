@@ -1,5 +1,6 @@
 package maze;
 
+import java.io.File;
 import java.util.*;
 
 public class Play {
@@ -8,24 +9,27 @@ public class Play {
     String [][] maze;
 
     ArrayList<ArrayList<List<Integer>>> edges = new ArrayList<>();
+    File file;
 
     public void menu() {
-        System.out.println("=== Menu ===");
-        System.out.println("1. Generate a new maze");
-        System.out.println("2. Load a maze");
-        System.out.println("0. Exit");
-        String item = getInput().trim();
 
-        switch (item) {
-            case "1" : generateMaze();
-            break;
-            case "2" : loadMaze();
-            break;
-            case "0" : exit();
-            default:
-                System.out.println("Enter right item");
-                break;
-        }
+            System.out.println("=== Menu ===");
+            System.out.println("1. Generate a new maze");
+            System.out.println("2. Load a maze");
+            System.out.println("0. Exit");
+            String item = getInput().trim();
+
+            switch (item) {
+                case "1" : generateMaze();
+                    break;
+                case "2" : loadMaze();
+                    break;
+                case "0" : exit();
+                default:
+                    System.out.println("Incorrect option. Please try again");
+                    menu();
+                    break;
+            }
     }
 
     private void exit() {
@@ -35,8 +39,6 @@ public class Play {
 
     private void loadMaze() {
     }
-
-
 
     private void generateMaze() {
         getGridSize();
@@ -51,10 +53,15 @@ public class Play {
         System.out.println("Please, enter the size of a maze");
         String[] gridSize = getInput().trim().split("\\s+");
         try {
-            lines = Integer.parseInt(gridSize[0]);
-            columns = Integer.parseInt(gridSize[1]);
+            if (gridSize.length == 2) {
+                lines = Integer.parseInt(gridSize[0]);
+                columns = Integer.parseInt(gridSize[1]);
+            } else {
+                lines = Integer.parseInt(gridSize[0]);
+                columns = lines;
+            }
         } catch (Exception e) {
-            System.out.println("Please, enter two numbers");
+            System.out.println("Please, enter numbers");
             getGridSize();
         }
         maze = new String[lines][columns];
