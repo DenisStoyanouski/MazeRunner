@@ -9,7 +9,36 @@ public class Play {
 
     ArrayList<ArrayList<List<Integer>>> edges = new ArrayList<>();
 
-    public void go() {
+    public void menu() {
+        System.out.println("=== Menu ===");
+        System.out.println("1. Generate a new maze");
+        System.out.println("2. Load a maze");
+        System.out.println("0. Exit");
+        String item = getInput().trim();
+
+        switch (item) {
+            case "1" : generateMaze();
+            break;
+            case "2" : loadMaze();
+            break;
+            case "0" : exit();
+            default:
+                System.out.println("Enter right item");
+                break;
+        }
+    }
+
+    private void exit() {
+        System.out.println("Bye!");
+        System.exit(0);
+    }
+
+    private void loadMaze() {
+    }
+
+
+
+    private void generateMaze() {
         getGridSize();
     }
 
