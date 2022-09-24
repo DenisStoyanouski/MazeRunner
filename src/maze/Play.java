@@ -1,5 +1,6 @@
 package maze;
 
+import javax.swing.*;
 import java.util.*;
 
 public class Play {
@@ -12,6 +13,7 @@ public class Play {
     public void go() {
         getGridSize();
         fillEdgesMatrix();
+
 
         /*fillGraphMatrix();
         displayGraphMatrix();*/
@@ -46,25 +48,48 @@ public class Play {
     }*/
 
     private void fillEdgesMatrix() {
+
         ArrayList<ArrayList<List<Integer>>> edges = new ArrayList<>();
-        for (int i = 0; i < graphMatrix.length; i++) {
-            for (int j = 0; j < graphMatrix[0].length; j++) {
+        for (int i = 0; i < lines; i++) {
+            for (int j = 0; j < columns; j++) {
                 ArrayList<List<Integer>> edgesOfGraph = new ArrayList<>();
-                if (j != graphMatrix[i].length - 1) {
-                    edgesOfGraph.add(List.of(j + i * columns + 1, getWeight()));
+                if (j != columns - 1) {
+                    edgesOfGraph.add(List.of(j + (i * 10) + 1, getWeight()));
                 }
-                if (i != graphMatrix.length - 1) {
-                    edgesOfGraph.add(List.of(j + i * columns + columns, getWeight()));
+                if (i != lines - 1) {
+                    edgesOfGraph.add(List.of(j + (i + 1) * lines, getWeight()));
                 }
                 edges.add(edgesOfGraph);
             }
         }
         displayEdgesMatrix(edges);
+        createSpanningTree(edges);
     }
 
-    private void displayEdgesMatrix(ArrayList edges) {
-        for (Object node : edges) {
-                System.out.println("Node " + edges.indexOf(node) + "--> " + node.toString());
+    private void displayEdgesMatrix(ArrayList<ArrayList<List<Integer>>> edges) {
+        System.out.println("This is EdgesMatrix");
+
+        createSpanningTree(edges);
+    }
+
+    private void createSpanningTree(ArrayList<ArrayList<List<Integer>>> edges) {
+        System.out.println("This is a spanning tree:");
+        for (var edge : edges) {
+            edge.sort((edge1, edge2) -> edge1.get(1).compareTo(edge2.get(1)));
+        }
+
+        for (var edge : edges) {
+            if (edge.size() > 1) {
+                edge.remove(1);
+            }
+        }
+
+        displaySpanningTree(edges);
+    }
+
+    private void displaySpanningTree(ArrayList<ArrayList<List<Integer>>> edges) {
+        for (var node : edges) {
+            System.out.println("Node " + edges.indexOf(node) + "--> " + node.toString());
         }
     }
 
