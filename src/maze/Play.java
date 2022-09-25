@@ -6,6 +6,7 @@ public class Play {
     int lines;
     int columns;
     String [][] maze;
+    ArrayList<String> buffer = new ArrayList<>();
 
     ArrayList<ArrayList<List<Integer>>> edges = new ArrayList<>();
     File file;
@@ -14,7 +15,7 @@ public class Play {
             System.out.println("=== Menu ===");
             System.out.println("1. Generate a new maze");
             System.out.println("2. Load a maze");
-            if (maze != null) {
+            if (maze != null || !buffer.isEmpty()) {
                 System.out.println("3. Save the maze");
                 System.out.println("4. Display the maze");
             }
@@ -27,6 +28,13 @@ public class Play {
                 case "2" : loadMaze();
                     break;
                 case "3" : saveMaze();
+                break;
+                case "4" : if (!buffer.isEmpty()) {
+                    displayMaze();
+                } else {
+                    printMaze();
+                }
+
                 break;
                 case "0" : exit();
                 default:
@@ -43,11 +51,12 @@ public class Play {
     }
 
     private void loadMaze() {
+        buffer.clear();
         String fileName = getInput();
         file = new File(String.format(".\\%s", fileName));
         try (Scanner scFile = new Scanner(file)) {
             while (scFile.hasNext()) {
-                System.out.println(scFile.nextLine());
+                buffer.add(scFile.nextLine());
             }
         } catch (FileNotFoundException e) {
             System.out.printf("The file %s does not exist", fileName);
@@ -64,6 +73,10 @@ public class Play {
         } catch (IOException e) {
             System.out.println("Cannot load the maze. It has an invalid format");
         }
+    }
+
+    private void displayMaze() {
+        buffer.forEach(System.out::println);
     }
 
     private void generateMaze() {
@@ -148,7 +161,7 @@ public class Play {
 
         getEnter();
         getEntrance();
-        displayMaze();
+        printMaze();
 
     }
 
@@ -172,7 +185,7 @@ public class Play {
     }
 
 
-    private void displayMaze() {
+    private void printMaze() {
         for (String[] line : maze) {
             for (String cell : line) {
                 System.out.print(cell);
