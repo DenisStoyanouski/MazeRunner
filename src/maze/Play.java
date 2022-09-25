@@ -11,10 +11,13 @@ public class Play {
     File file;
 
     public void menu() {
-
             System.out.println("=== Menu ===");
             System.out.println("1. Generate a new maze");
             System.out.println("2. Load a maze");
+            if (maze != null) {
+                System.out.println("3. Save the maze");
+                System.out.println("4. Display the maze");
+            }
             System.out.println("0. Exit");
             String item = getInput().trim();
 
@@ -23,12 +26,15 @@ public class Play {
                     break;
                 case "2" : loadMaze();
                     break;
+                case "3" : saveMaze();
+                break;
                 case "0" : exit();
                 default:
                     System.out.println("Incorrect option. Please try again");
                     menu();
                     break;
             }
+            menu();
     }
 
     private void exit() {
@@ -46,8 +52,18 @@ public class Play {
         } catch (FileNotFoundException e) {
             System.out.printf("The file %s does not exist", fileName);
         }
+    }
 
-
+    private void saveMaze() {
+        String fileName = getInput();
+        file = new File(String.format(".\\%s", fileName));
+        try (PrintWriter printWriter = new PrintWriter(file)) {
+            for (String[] line : maze) {
+                printWriter.println(Arrays.toString(line).replaceAll("[\\[\\]]", "").replaceAll("(,\\s)", ""));
+            }
+        } catch (IOException e) {
+            System.out.println("Cannot load the maze. It has an invalid format");
+        }
     }
 
     private void generateMaze() {
