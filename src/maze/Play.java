@@ -1,6 +1,5 @@
 package maze;
-
-import java.io.File;
+import java.io.*;
 import java.util.*;
 
 public class Play {
@@ -38,6 +37,17 @@ public class Play {
     }
 
     private void loadMaze() {
+        String fileName = getInput();
+        file = new File(String.format(".\\%s", fileName));
+        try (Scanner scFile = new Scanner(file)) {
+            while (scFile.hasNext()) {
+                System.out.println(scFile.nextLine());
+            }
+        } catch (FileNotFoundException e) {
+            System.out.printf("The file %s does not exist", fileName);
+        }
+
+
     }
 
     private void generateMaze() {
