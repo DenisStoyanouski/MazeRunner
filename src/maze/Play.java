@@ -34,7 +34,8 @@ public class Play {
                 } else {
                     printMaze();
                 }
-
+                break;
+                case "5" : findEscape();
                 break;
                 case "0" : exit();
                 default:
@@ -77,6 +78,9 @@ public class Play {
 
     private void displayMaze() {
         buffer.forEach(System.out::println);
+    }
+
+    private void findEscape() {
     }
 
     private void generateMaze() {
