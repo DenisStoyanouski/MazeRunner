@@ -7,17 +7,19 @@ public class Play {
     int columns;
     String [][] maze;
     ArrayList<String> buffer = new ArrayList<>();
-
     ArrayList<ArrayList<List<Integer>>> edges = new ArrayList<>();
     File file;
+    int[] enter = new int[2];
+    int[] entrance = new int[2];
 
     public void menu() {
             System.out.println("=== Menu ===");
-            System.out.println("1. Generate a new maze");
-            System.out.println("2. Load a maze");
+            System.out.println("1. Generate a new maze.");
+            System.out.println("2. Load a maze.");
             if (maze != null || !buffer.isEmpty()) {
-                System.out.println("3. Save the maze");
-                System.out.println("4. Display the maze");
+                System.out.println("3. Save the maze.");
+                System.out.println("4. Display the maze.");
+                System.out.println("5. Find the escape.");
             }
             System.out.println("0. Exit");
             String item = getInput().trim();
@@ -81,6 +83,9 @@ public class Play {
     }
 
     private void findEscape() {
+        LinkedList<int[]> path = new LinkedList();
+        System.out.println(Arrays.toString(enter));
+        System.out.println(Arrays.toString(entrance));
     }
 
     private void generateMaze() {
@@ -174,6 +179,8 @@ public class Play {
         line = getRandomLine();
         if ("  ".equals(maze[line][1])) {
             maze[line][0] = " ".repeat(2);
+            enter[0] = line;
+            enter[1] = 0;
         } else getEnter();
     }
 
@@ -182,6 +189,8 @@ public class Play {
         line = getRandomLine();
         if ("  ".equals(maze[line][columns - 2])) {
             maze[line][columns - 1] = " ".repeat(2);
+            entrance[0] = line;
+            entrance[1] = columns - 1;
         } else {
             getEntrance();
         }
