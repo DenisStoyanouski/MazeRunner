@@ -14,8 +14,6 @@ public class Play {
     static int[] enter = new int[2];
     static int[] entrance = new int[2];
 
-    static boolean [][] visited = new boolean[lines][columns];
-
     public void menu() {
             System.out.println("=== Menu ===");
             System.out.println("1. Generate a new maze.");
@@ -112,7 +110,7 @@ public class Play {
                 columns = Integer.parseInt(gridSize[1]);
             } else {
                 lines = Integer.parseInt(gridSize[0]);
-                columns = lines;
+                columns = Integer.parseInt(gridSize[0]);
             }
         } catch (Exception e) {
             System.out.println("Please, enter numbers");
