@@ -36,7 +36,7 @@ public class Play {
                 case "4" : if (!buffer.isEmpty()) {
                     displayMaze();
                 } else {
-                    printMaze();
+                    printMaze(maze);
                 }
                 break;
                 case "5" : findEscape();
@@ -174,7 +174,7 @@ public class Play {
 
         getEnter();
         getEntrance();
-        printMaze();
+        printMaze(maze);
 
     }
 
@@ -202,7 +202,7 @@ public class Play {
     }
 
 
-    private void printMaze() {
+    private void printMaze(String[][] maze) {
         for (String[] line : maze) {
             for (String cell : line) {
                 System.out.print(cell);
@@ -222,17 +222,16 @@ public class Play {
     }
 
     public void printPath(List<Coordinate> path) {
-        System.out.println(path);
-        /*int[][] tempMaze = Arrays.stream(maze)
-                .map(int[]::clone)
-                .toArray(int[][]::new);
+        Collections.reverse(path);
+        path.forEach(x -> System.out.println(x.getRow() + " " + x.getColumn()));
+
+        String[][] tempMaze = Arrays.stream(maze)
+                .map(String[]::clone)
+                .toArray(String[][]::new);
         for (Coordinate coordinate : path) {
-            if (isStart(coordinate.getRow(), coordinate.getColumn()) || isExit(coordinate.getRow(), coordinate.getColumn())) {
-                continue;
-            }
-            tempMaze[coordinate.getRow()][coordinate.getColumn()] = PATH;
+            tempMaze[coordinate.getRow()][coordinate.getColumn()] = "//";
         }
-        System.out.println(toString(tempMaze));*/
+        printMaze(tempMaze);
     }
 }
 
