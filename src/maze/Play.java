@@ -2,15 +2,19 @@ package maze;
 import java.io.*;
 import java.util.*;
 
+import static maze.Play.*;
+
 public class Play {
-    int lines;
-    int columns;
+    static int lines;
+    static int columns;
     String [][] maze;
     ArrayList<String> buffer = new ArrayList<>();
     ArrayList<ArrayList<List<Integer>>> edges = new ArrayList<>();
     File file;
-    int[] enter = new int[2];
-    int[] entrance = new int[2];
+    static int[] enter = new int[2];
+    static int[] entrance = new int[2];
+
+    static boolean [][] visited = new boolean[lines][columns];
 
     public void menu() {
             System.out.println("=== Menu ===");
@@ -83,9 +87,10 @@ public class Play {
     }
 
     private void findEscape() {
-        /*List<Coordinate> path = bfs.solve(maze);
-        maze.printPath(path);
-        maze.reset();*/
+        BFSMazeSolver bfs = new BFSMazeSolver();
+        List<Coordinate> path = bfs.solve(maze);
+        printPath(path);
+        /*maze.reset();*/
 
     }
 
@@ -216,6 +221,20 @@ public class Play {
     private int getRandomLine() {
         Random random = new Random();
         return random.nextInt(lines - 1) + 1;
+    }
+
+    public void printPath(List<Coordinate> path) {
+        System.out.println(path);
+        /*int[][] tempMaze = Arrays.stream(maze)
+                .map(int[]::clone)
+                .toArray(int[][]::new);
+        for (Coordinate coordinate : path) {
+            if (isStart(coordinate.getRow(), coordinate.getColumn()) || isExit(coordinate.getRow(), coordinate.getColumn())) {
+                continue;
+            }
+            tempMaze[coordinate.getRow()][coordinate.getColumn()] = PATH;
+        }
+        System.out.println(toString(tempMaze));*/
     }
 }
 
