@@ -66,6 +66,28 @@ public class Play {
         } catch (FileNotFoundException e) {
             System.out.printf("The file %s does not exist", fileName);
         }
+
+        var mz =  buffer.toArray();
+        lines = mz.length;
+        columns = mz[0].toString().length()/2;
+        maze = new String[lines][columns];
+        for (int i = 0; i < maze.length; i++) {
+            maze[i] = buffer.toArray()[i].toString().split("(?<=\\G.{2})");
+        }
+
+        for (int i = 0; i < maze.length; i++) {
+            for (int j = 0; j < maze[0].length; j++) {
+                if ("  ".equals(maze[i][0])) {
+                    enter[0] = i;
+                    enter[1] = 0;
+                }
+                if ("  ".equals(maze[i][maze[0].length - 1])) {
+                    entrance[0] = i;
+                    entrance[1] = maze[0].length - 1;
+                }
+            }
+        }
+
     }
 
     private void saveMaze() {
@@ -88,8 +110,6 @@ public class Play {
         BFSMazeSolver bfs = new BFSMazeSolver();
         List<Coordinate> path = bfs.solve(maze);
         printPath(path);
-        /*maze.reset();*/
-
     }
 
     private void generateMaze() {
@@ -222,9 +242,6 @@ public class Play {
     }
 
     public void printPath(List<Coordinate> path) {
-        Collections.reverse(path);
-        path.forEach(x -> System.out.println(x.getRow() + " " + x.getColumn()));
-
         String[][] tempMaze = Arrays.stream(maze)
                 .map(String[]::clone)
                 .toArray(String[][]::new);
