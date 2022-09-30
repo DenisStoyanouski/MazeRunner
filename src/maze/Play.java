@@ -2,8 +2,6 @@ package maze;
 import java.io.*;
 import java.util.*;
 
-import static maze.Play.*;
-
 public class Play {
     static int lines;
     static int columns;
