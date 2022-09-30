@@ -83,9 +83,10 @@ public class Play {
     }
 
     private void findEscape() {
-        LinkedList<int[]> path = new LinkedList();
-        System.out.println(Arrays.toString(enter));
-        System.out.println(Arrays.toString(entrance));
+        /*List<Coordinate> path = bfs.solve(maze);
+        maze.printPath(path);
+        maze.reset();*/
+
     }
 
     private void generateMaze() {
@@ -216,5 +217,36 @@ public class Play {
         Random random = new Random();
         return random.nextInt(lines - 1) + 1;
     }
-
 }
+
+class Coordinate {
+
+    int row;
+    int column;
+    Coordinate parent;
+
+    public Coordinate(int row, int column) {
+        this.row = row;
+        this.column = column;
+        this.parent = null;
+    }
+
+    public Coordinate(int row, int column, Coordinate parent) {
+        this.row = row;
+        this.column = column;
+        this.parent = parent;
+    }
+
+    int getRow() {
+        return row;
+    }
+
+    int getColumn() {
+        return column;
+    }
+
+    Coordinate getParent() {
+        return parent;
+    }
+}
+
